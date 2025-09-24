@@ -4,7 +4,7 @@ from typing import Callable
 
 class Distance:
 
-    def __init__(self, km: int|float) -> None:
+    def __init__(self, km: int | float) -> None:
         self.km = km
 
     def __str__(
@@ -40,9 +40,10 @@ class Distance:
         if isinstance(other, (int, float)):
             return Distance(round(self.km / other, 2))
         return NotImplemented
+
     def _compare(
-        self, other: Distance | int | float, method: Callable[[float, float], bool]
-    ) -> bool:
+        self, other: Distance | int | float, method: Callable[
+            [float, float], bool]) -> bool:
         if isinstance(other, Distance):
             return method(self.km, other.km)
         if isinstance(other, (int, float)):

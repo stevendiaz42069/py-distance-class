@@ -4,7 +4,7 @@ from typing import Callable
 
 class Distance:
 
-    def __init__(self, km: int) -> None:
+    def __init__(self, km: int|float) -> None:
         self.km = km
 
     def __str__(
@@ -18,7 +18,7 @@ class Distance:
     def __add__(self, other: Distance | int | float) -> Distance:
         if isinstance(other, Distance):
             return Distance(self.km + other.km)
-        elif isinstance(other, (int, float)):
+        if isinstance(other, (int, float)):
             return Distance(self.km + other)
         return NotImplemented
 
@@ -26,7 +26,7 @@ class Distance:
         if isinstance(other, Distance):
             self.km += other.km
             return self
-        elif isinstance(other, (int, float)):
+        if isinstance(other, (int, float)):
             self.km += other
             return self
         return NotImplemented
@@ -34,17 +34,18 @@ class Distance:
     def __mul__(self, other: int | float) -> Distance:
         if isinstance(other, (int, float)):
             return Distance(self.km * other)
+        return NotImplemented
 
     def __truediv__(self, other: int | float) -> Distance:
         if isinstance(other, (int, float)):
             return Distance(round(self.km / other, 2))
-
+        return NotImplemented
     def _compare(
-        self, other: Distance | int | float, method: Callable[float, float]
+        self, other: Distance | int | float, method: Callable[[float, float], bool]
     ) -> bool:
         if isinstance(other, Distance):
             return method(self.km, other.km)
-        elif isinstance(other, (int, float)):
+        if isinstance(other, (int, float)):
             return method(self.km, other)
         return NotImplemented
 
